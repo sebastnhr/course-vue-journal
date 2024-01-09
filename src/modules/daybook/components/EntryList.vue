@@ -3,10 +3,10 @@ import { defineAsyncComponent } from 'vue';
 <div>
     <div class="entry-list-container">
         <div class="px-2 pt-2">
-            <input type="text" class="form-control" placeholder="Buscar entrada" >
+            <input type="text" class="form-control" placeholder="Buscar entrada" v-model="term">
         </div>
         <div class="entry-scrollarea">
-            <Entry v-for="item in 100" :key="item"/>
+            <Entry v-for="entry in entriesByTerm" :key="entry.id" :entry="entry"/>
         </div> 
     </div> 
 </div>
@@ -14,10 +14,22 @@ import { defineAsyncComponent } from 'vue';
 
 <script>
 import { defineAsyncComponent } from 'vue';
+import { mapGetters } from 'vuex';
 
 export default {
+    data() {
+        return {
+            term: ''
+        }
+    },
     components: {
         Entry: defineAsyncComponent(() => import('./Entry.vue'))
+    },
+    computed:{
+        ...mapGetters('journal', ['getEntryByTerm']),
+        entriesByTerm(){
+            return this.getEntryByTerm(this.term);
+        }
     }
 }
 </script>
