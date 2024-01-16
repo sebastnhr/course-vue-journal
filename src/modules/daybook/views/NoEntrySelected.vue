@@ -4,7 +4,7 @@ import { defineAsyncComponent } from 'vue';
         <div class="d-flex justify-content-center">
             <h1 class="align-self-center">No hay nada seleccionado</h1>
         </div>
-        <Fab />
+        <Fab @on:click="newEntry"/>
     </div>
 </template>
 
@@ -14,7 +14,12 @@ import { defineAsyncComponent } from 'vue';
 export default {
     components: {
         Fab: defineAsyncComponent(() => import('../components/Fab.vue'))
-    }
+    },
+    methods: {
+        newEntry(){
+            this.$router.push({ name: 'entry', params: {id: 'new'}});
+        }
+    },
 }
 </script>
 
